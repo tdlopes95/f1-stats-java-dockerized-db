@@ -1,9 +1,10 @@
 // SessionResultRepository.java
 package com.f1.repo;
 
+import com.f1.dto.SessionResultRow;
 import com.f1.domain.SessionResult;
 import com.f1.domain.SessionType;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -104,5 +105,22 @@ public interface SessionResultRepository extends JpaRepository<SessionResult, Lo
     ORDER BY pts DESC
   """)
   List<Object[]> driverLeaderboardByType(@Param("seasonId") Long seasonId, @Param("type") SessionType type);
+  
+  
+@Query("""
+    select new com.f1.dto.SessionResultRow(
+      sr.position,
+      d.name,
+      t.name,
+      sr.points
+    )
+    from SessionResult sr
+      join sr.driver d
+      join sr.team   t
+    where sr.session.id = :sessionId
+    order by sr.position nulls last, d.name
+  """)
+  List<SessionResultRow> findRowsBySessionId(@Param("sessionId") Long sessionId);
+
 
 }

@@ -1,7 +1,7 @@
 package com.f1.repo;
 import com.f1.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.*;
+import java.util.List;
 
 
 public interface RaceRepository extends JpaRepository<Race, Long> {
