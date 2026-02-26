@@ -25,7 +25,7 @@ public class RaceQueryController {
 
   /** GET /api/season/{seasonId}/races -> races ordered by round */
   @GetMapping("/season/{seasonId}/races")
-  public List<RaceDto> racesInSeason(@PathVariable Long seasonId) {
+  public List<RaceDto> racesInSeason(@PathVariable("seasonId") Long seasonId) {
     return raceRepo.findBySeasonIdOrderByRoundAsc(seasonId)
         .stream()
         .map(r -> new RaceDto(r.getId(), r.getSeason().getId(), r.getName(), r.getRaceDate(), r.getRound()))
@@ -34,7 +34,7 @@ public class RaceQueryController {
 
   /** GET /api/race/{id} -> 1 race */
   @GetMapping("/race/{id}")
-  public ResponseEntity<RaceDto> getRace(@PathVariable Long id) {
+  public ResponseEntity<RaceDto> getRace(@PathVariable("id") Long id) {
     return raceRepo.findById(id)
         .map(r -> new RaceDto(r.getId(), r.getSeason().getId(), r.getName(), r.getRaceDate(), r.getRound()))
         .map(ResponseEntity::ok)
@@ -43,7 +43,7 @@ public class RaceQueryController {
 
   /** GET /api/race/{id}/sessions -> list of Race / Sprint for that race */
   @GetMapping("/race/{id}/sessions")
-  public List<RaceSessionDto> getRaceSessions(@PathVariable Long id) {
+  public List<RaceSessionDto> getRaceSessions(@PathVariable("id") Long id) {
     List<RaceSession> list = sessionRepo.findByRaceIdOrderBySessionTypeAscSessionNoAsc(id);
     return list.stream()
         .map(rs -> new RaceSessionDto(
@@ -57,7 +57,7 @@ public class RaceQueryController {
 
   /** GET /api/race-session/{sessionId}/results -> driver, team, position, points */
   @GetMapping("/race-session/{sessionId}/results")
-  public List<SessionResultRow> getSessionResults(@PathVariable Long sessionId) {
+  public List<SessionResultRow> getSessionResults(@PathVariable("sessionId") Long sessionId) {
     return resultRepo.findRowsBySessionId(sessionId);
   }
 }

@@ -4,6 +4,7 @@ package com.f1.repo;
 import com.f1.dto.SessionResultRow;
 import com.f1.domain.SessionResult;
 import com.f1.domain.SessionType;
+import org.springframework.data.jpa.repository.JpaRepository;   // <-- missing import
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -60,7 +61,9 @@ public interface SessionResultRepository extends JpaRepository<SessionResult, Lo
     SELECT SUM(sr.points) FROM SessionResult sr
     WHERE sr.driver.id=:driverId AND sr.session.race.season.id=:seasonId AND sr.session.sessionType=:type
   """)
-  Integer totalPointsForDriverInSeasonByType(@Param("driverId") Long driverId, @Param("seasonId") Long seasonId, @Param("type") SessionType type);
+  Integer totalPointsForDriverInSeasonByType(@Param("driverId") Long driverId,
+                                             @Param("seasonId") Long seasonId,
+                                             @Param("type") SessionType type);
 
   @Query("""
     SELECT AVG(sr.points) FROM SessionResult sr
@@ -105,9 +108,9 @@ public interface SessionResultRepository extends JpaRepository<SessionResult, Lo
     ORDER BY pts DESC
   """)
   List<Object[]> driverLeaderboardByType(@Param("seasonId") Long seasonId, @Param("type") SessionType type);
-  
-  
-@Query("""
+
+  // === Results table rows for one session (used by UI) ===
+  @Query("""
     select new com.f1.dto.SessionResultRow(
       sr.position,
       d.name,
@@ -121,6 +124,4 @@ public interface SessionResultRepository extends JpaRepository<SessionResult, Lo
     order by sr.position nulls last, d.name
   """)
   List<SessionResultRow> findRowsBySessionId(@Param("sessionId") Long sessionId);
-
-
 }

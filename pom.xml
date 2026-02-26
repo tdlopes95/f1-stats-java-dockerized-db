@@ -1,12 +1,16 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>com.example</groupId>
   <artifactId>f1-stats</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
   <properties>
+    <!-- Java & Spring Boot -->
     <java.version>21</java.version>
     <spring.boot.version>3.3.2</spring.boot.version>
-    <lombok.version>1.18.40</lombok.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
+    <lombok.version>1.18.42</lombok.version>
   </properties>
 
   <dependencyManagement>
@@ -22,24 +26,31 @@
   </dependencyManagement>
 
   <dependencies>
+    <!-- Web & JPA -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- OpenAPI UI (Swagger UI) -->
+    <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
       <version>2.6.0</version>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
+
+    <!-- Database -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <!-- Flyway (core + PostgreSQL module) -->
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
@@ -48,12 +59,16 @@
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-database-postgresql</artifactId>
     </dependency>
+
+    <!-- Lombok (compile-time only) -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
+
+    <!-- Tests -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -63,13 +78,14 @@
 
   <build>
     <plugins>
+
+      <!-- Spring Boot repackage -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
           <image>false</image>
         </configuration>
-        
         <executions>
           <execution>
             <goals>
@@ -77,14 +93,16 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
 
-        </plugin>
-        <plugin>
+      <!-- Java compiler + Lombok as annotation processor -->
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
         <configuration>
-          <release>21</release>
+          <release>${maven.compiler.release}</release>
+          <parameters>true</parameters>
           <annotationProcessorPaths>
             <path>
               <groupId>org.projectlombok</groupId>
@@ -94,6 +112,22 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
+
+      <!-- Optional: ensure a JDK 21 toolchain on your workstation -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-toolchain-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <toolchains>
+            <jdk>
+              <version>21</version>
+              <vendor>any</vendor>
+            </jdk>
+          </toolchains>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 </project>

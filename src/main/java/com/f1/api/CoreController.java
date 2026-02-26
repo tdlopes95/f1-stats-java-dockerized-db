@@ -1,6 +1,5 @@
 package com.f1.api;
 
-
 import com.f1.dto.*;
 import com.f1.domain.*;
 import com.f1.repo.*;
@@ -40,7 +39,7 @@ public class CoreController {
   @PostMapping("/races")
   public ResponseEntity<Race> createRace(@RequestBody CreateRaceRequest req) {
     Season s = seasonRepo.findById(req.seasonId()).orElseThrow();
-    
+
     Race r = new Race(
       s,
       req.name(),
@@ -93,4 +92,3 @@ public class CoreController {
     return ResponseEntity.status(HttpStatus.CREATED).body(resultRepo.save(sr));
   }
 }
-

@@ -4,6 +4,10 @@ com\f1\domain\RaceSession.class
 com\f1\F1StatsApplication.class
 com\f1\domain\DriverTeamMembership.class
 com\f1\dto\CreateTeamRequest.class
+com\f1\dto\RaceDto.class
+com\f1\api\RaceQueryController.class
+com\f1\dto\SessionResultRow.class
+com\f1\api\SeasonQueryController.class
 com\f1\dto\DriverSeasonSummary.class
 com\f1\repo\DriverTeamMembershipRepository.class
 com\f1\dto\AssignDriverToTeamForSeasonRequest.class
@@ -22,8 +26,10 @@ com\f1\dto\CreateRaceSessionRequest.class
 com\f1\repo\DriverRepository.class
 com\f1\api\StatsController.class
 com\f1\api\TeamController.class
+com\f1\dto\RaceSessionDto.class
 com\f1\repo\SessionResultRepository.class
 com\f1\repo\RaceRepository.class
+com\f1\dto\SeasonDto.class
 com\f1\domain\Driver.class
 com\f1\domain\Team.class
 com\f1\repo\SeasonRepository.class
