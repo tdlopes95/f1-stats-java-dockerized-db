@@ -376,8 +376,8 @@ JOIN driver_team_memberships m ON m.driver_id = d.id AND m.season_id = s.id;
 INSERT INTO session_results (driver_id, session_id, team_id, position, points)
 SELECT d.id, rs.id, m.team_id, pos.p, pos.pts
 FROM (VALUES
-  (1,8,'Lewis Hamilton'), (2,7,'Lando Norris'), (3,6,'Oscar Piastri'), (4,5,'George Russell'),
-  (5,4,'Max Verstappen'), (6,3,'Kimi Antonelli'), (7,2,'Alex Albon'), (8,1,'Oliver Bearman')
+  (1,8,'Lewis Hamilton'), (2,7,'Oscar Piastri'), (3,6,'Max Verstappen'), (4,5,'George Russell'),
+  (5,4,'Charles Leclerc'), (6,3,'Yuki Tsunoda'), (7,2,'Kimi Antonelli'), (8,1,'Lando Norris')
 ) AS pos(p, pts, name)
 JOIN drivers d  ON d.name = pos.name
 JOIN seasons s  ON s.year = 2025
