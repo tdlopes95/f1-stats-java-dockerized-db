@@ -1,0 +1,22 @@
+
+// Basic repos
+package com.f1.repo;
+import com.f1.domain.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.*;
+
+public interface TeamRepository extends JpaRepository<Team, Long> {}
+public interface DriverRepository extends JpaRepository<Driver, Long> {}
+public interface SeasonRepository extends JpaRepository<Season, Long> {
+  Optional<Season> findByYear(Integer year);
+}
+public interface RaceRepository extends JpaRepository<Race, Long> {
+  List<Race> findBySeasonIdOrderByRoundAsc(Long seasonId);
+}
+public interface DriverTeamMembershipRepository extends JpaRepository<DriverTeamMembership, Long> {
+  Optional<DriverTeamMembership> findByDriverIdAndSeasonId(Long driverId, Long seasonId);
+}
+public interface RaceSessionRepository extends JpaRepository<RaceSession, Long> {
+  List<RaceSession> findByRaceId(Long raceId);
+  List<RaceSession> findByRaceIdAndSessionType(Long raceId, SessionType sessionType);
+}
